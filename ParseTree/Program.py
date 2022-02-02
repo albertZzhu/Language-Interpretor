@@ -9,9 +9,28 @@ class Program:
 
     def parse(self):
         if self.scanner.currentToken() == Core.PROGRAM:
+            self.printToken(self.scanner.currentToken().name)
             self.scanner.nextToken()
-            new = Decl_seq(self.scanner, 1)
-            new.parse()
-            self.scanner.nextToken()
+            if self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF:
+                new = Decl_seq(self.scanner, 1)
+                new.parse()
+            if self.scanner.currentToken() == Core.BEGIN:
+                self.printToken(self.scanner.currentToken().name)
+                self.scanner.nextToken()
+                new = Stmt_seq(self.scanner, 1)
+                new.parse()
+                if self.scanner.currentToken() == Core.END:
+                    self.printToken(self.scanner.currentToken().name)
+                else:
+                    print("ERROR: Expecting END token, received " + self.scanner.currentToken())
+                    exit(0)
+            else:
+                print("ERROR: Expecting BEGIN token, received " + self.scanner.currentToken())
+                exit(0)
+        else:
+            print("ERROR: Expecting PROGRAM token, received " + self.scanner.currentToken())
+            exit(0)
 
+    def printToken(self, token):
+        print(token, end="")
 
