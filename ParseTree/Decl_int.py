@@ -1,0 +1,24 @@
+from Scanner import Scanner
+from Core import Core
+from Id_list import Id_list
+
+
+class Decl_int:
+
+    def __init__(self, scanner, numIndent):
+        self.scanner = scanner
+        self.numIndent = numIndent
+
+    def parse(self):
+        if self.scanner.currentToken() == Core.INT:
+            self.printToken(self.scanner.currentToken().name)
+            self.scanner.nextToken()
+            new = Id_list(self.scanner)
+        else:
+            print("ERROR: not an int identifier")
+
+    def printToken(self, token):
+        print("\t" * self.numIndent, end="")
+        print(token+" ", end="")
+
+
