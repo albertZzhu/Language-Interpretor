@@ -1,6 +1,7 @@
 from Scanner import Scanner
 from Core import Core
 from Decl_seq import Decl_seq
+from Stmt_seq import Stmt_seq
 
 class Program:
 
