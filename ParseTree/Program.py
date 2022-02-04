@@ -23,13 +23,13 @@ class Program:
                 if self.scanner.currentToken() == Core.END:
                     self.printToken(self.scanner.currentToken().name)
                 else:
-                    print("ERROR: Expecting END token, received " + self.scanner.currentToken())
+                    print("ERROR: Expecting END token, received " + self.scanner.currentToken().name)
                     exit(0)
             else:
-                print("ERROR: Expecting BEGIN token, received " + self.scanner.currentToken())
+                print("ERROR: Expecting BEGIN token, received " + self.scanner.currentToken().name)
                 exit(0)
         else:
-            print("ERROR: Expecting PROGRAM token, received " + self.scanner.currentToken())
+            print("ERROR: Expecting PROGRAM token, received " + self.scanner.currentToken().name)
             exit(0)
 
     def printToken(self, token):
