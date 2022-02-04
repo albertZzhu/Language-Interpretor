@@ -12,7 +12,8 @@ class Id_list:
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.COMMA:
                 self.printToken(", ")
-                new = Id_list(self.scanner, 0)
+                self.scanner.nextToken()
+                new = Id_list(self.scanner)
                 new.parse()
             elif self.scanner.currentToken() == Core.SEMICOLON:
                 self.printToken(";\n")

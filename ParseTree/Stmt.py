@@ -1,6 +1,6 @@
 from Core import Core
 from Scanner import Scanner
-from Decl import Decl
+from .Decl import Decl
 
 
 class Stmt:
@@ -28,8 +28,6 @@ class Stmt:
         elif self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF:
             new = Decl(self.scanner, self.numIndent)
             new.parse()
-        elif self.scanner.currentToken() == Core.END:
-            self.printToken(self.scanner.currentToken().name)
         else:
             print("ERROR: Expecting statement token form, received" + self.scanner.currentToken().name)
 

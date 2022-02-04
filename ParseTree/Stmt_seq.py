@@ -1,6 +1,6 @@
 from Core import Core
 from Scanner import Scanner
-from Stmt import Stmt
+from .Stmt import Stmt
 
 
 class Stmt_seq:
@@ -12,3 +12,6 @@ class Stmt_seq:
     def parse(self):
         new = Stmt(self.scanner, self.numIndent)
         new.parse()
+        while self.scanner.currentToken() != Core.END:
+            new = Stmt(self.scanner, self.numIndent)
+            new.parse()

@@ -1,6 +1,6 @@
 from Scanner import Scanner
 from Core import Core
-from Id_list import Id_list
+from .Id_list import Id_list
 
 
 class Decl_int:
@@ -11,9 +11,10 @@ class Decl_int:
 
     def parse(self):
         if self.scanner.currentToken() == Core.INT:
-            self.printToken(self.scanner.currentToken().name)
+            self.printToken(self.scanner.currentToken().name.lower())
             self.scanner.nextToken()
             new = Id_list(self.scanner)
+            new.parse()
         else:
             print("ERROR: not an int identifier")
 

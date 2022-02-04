@@ -1,7 +1,7 @@
 from Scanner import Scanner
 from Core import Core
-from Decl_seq import Decl_seq
-from Stmt_seq import Stmt_seq
+from .Decl_seq import Decl_seq
+from .Stmt_seq import Stmt_seq
 
 class Program:
 
@@ -10,7 +10,7 @@ class Program:
 
     def parse(self):
         if self.scanner.currentToken() == Core.PROGRAM:
-            self.printToken(self.scanner.currentToken().name)
+            self.printToken(self.scanner.currentToken().name.lower()+"\n")
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF:
                 new = Decl_seq(self.scanner, 1)
@@ -21,7 +21,7 @@ class Program:
                 new = Stmt_seq(self.scanner, 1)
                 new.parse()
                 if self.scanner.currentToken() == Core.END:
-                    self.printToken(self.scanner.currentToken().name)
+                    self.printToken(self.scanner.currentToken().name.lower())
                 else:
                     print("ERROR: Expecting END token, received " + self.scanner.currentToken().name)
                     exit(0)

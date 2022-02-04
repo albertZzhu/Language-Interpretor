@@ -1,6 +1,6 @@
 from Core import Core
 from Scanner import Scanner
-from Decl import Decl
+from .Decl import Decl
 
 
 class Decl_seq:

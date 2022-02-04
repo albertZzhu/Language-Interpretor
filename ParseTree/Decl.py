@@ -1,7 +1,7 @@
 from Core import Core
 from Scanner import Scanner
-from Decl_int import Decl_int
-from Decl_ref import Decl_ref
+from .Decl_int import Decl_int
+from .Decl_ref import Decl_ref
 
 
 class Decl:
