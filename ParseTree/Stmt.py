@@ -1,7 +1,8 @@
 from Core import Core
 from Scanner import Scanner
 from .Decl import Decl
-
+from .Assign import Assign
+from .If import If
 
 class Stmt:
 

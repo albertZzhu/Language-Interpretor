@@ -1,5 +1,6 @@
 from Core import Core
 from Scanner import Scanner
+from .Expr import Expr
 
 class Assign:
 
@@ -42,6 +43,11 @@ class Assign:
             else:
                 new = Expr(self.scanner)
                 new.parse()
+                if self.scanner.currentToken() == Core.SEMICOLON:
+                    self.printToken(self.scanner.currentToken().name.lower)
+                    self.scanner.nextToken()
+                else:
+                    print("ERROR: Expecting Semicolon token, received " + self.scanner.currentToken().name.lower())
         else:
             print("ERROR: Expecting Assign, received "+self.scanner.currentToken().name.lower())
 
