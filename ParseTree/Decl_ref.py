@@ -17,6 +17,7 @@ class Decl_ref:
             new.parse()
         else:
             print("ERROR: not an ref identifier")
+            exit(0)
 
     def printToken(self, token):
         print("\t" * self.numIndent, end="")

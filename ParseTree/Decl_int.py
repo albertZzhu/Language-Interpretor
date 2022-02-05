@@ -17,6 +17,7 @@ class Decl_int:
             new.parse()
         else:
             print("ERROR: not an int identifier")
+            exit(0)
 
     def printToken(self, token):
         print("\t" * self.numIndent, end="")

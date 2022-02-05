@@ -19,3 +19,5 @@ class Decl:
             new.parse()
         else:
             print("ERROR: wrong decl format, it is neither REF nor INT")
+            exit(0)
+

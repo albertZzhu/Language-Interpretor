@@ -11,14 +11,16 @@ class Id_list:
             self.printToken(self.scanner.getID())
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.COMMA:
-                self.printToken(", ")
+                self.printToken(",")
                 self.scanner.nextToken()
                 new = Id_list(self.scanner)
                 new.parse()
             elif self.scanner.currentToken() == Core.SEMICOLON:
                 self.printToken(";\n")
+                self.scanner.nextToken()
         else:
             print("ERROR: not an valid ID")
+            exit(0)
 
     def printToken(self, token):
         print(token, end="")

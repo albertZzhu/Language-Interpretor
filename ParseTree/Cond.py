@@ -8,20 +8,22 @@ class Cond:
 
     def parse(self):
         if self.scanner.currentToken() == Core.NEGATION:
-            self.printToken(self.scanner.currentToken().name)
+            self.printToken("!")
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.LPAREN:
-                self.printToken(self.scanner.currentToken().name)
+                self.printToken("(")
                 self.scanner.nextToken()
                 new = Cond(self.scanner)
                 new.parse()
                 if self.scanner.currentToken() == Core.RPAREN:
-                    self.printToken(self.scanner.currentToken().name)
+                    self.printToken(")")
                     self.scanner.nextToken()
                 else:
                     print("ERROR: RPAREN token expected, received" + self.scanner.currentToken().name)
+                    exit(0)
             else:
                 print("ERROR: LPAREN token expected, received" + self.scanner.currentToken().name)
+                exit(0)
         else:
             new = Cmpr(self.scanner)
             new.parse()
@@ -32,6 +34,6 @@ class Cond:
                 new.parse()
 
     def printToken(self, token):
-        print(token + " ", end="")
+        print(token, end="")
 
 

@@ -10,11 +10,16 @@ class Expr:
     def parse(self):
         new = Term(self.scanner)
         new.parse()
-        if self.scanner.currentToken() == Core.ADD or self.scanner.currentToken() == Core.SUB:
-            self.printToken(self.scanner.currentToken().name)
+        if self.scanner.currentToken() == Core.ADD:
+            self.printToken("+")
+            self.scanner.nextToken()
+            new = Expr(self.scanner)
+            new.parse()
+        elif self.scanner.currentToken() == Core.SUB:
+            self.printToken("-")
             self.scanner.nextToken()
             new = Expr(self.scanner)
             new.parse()
 
     def printToken(self, token):
-        print(token+" ", end="")
+        print(token, end="")

@@ -10,23 +10,23 @@ class Cmpr:
         new = Expr(self.scanner)
         new.parse()
         if self.scanner.currentToken() == Core.EQUAL:
-            self.printToken(self.scanner.currentToken().name)
+            self.printToken("==")
             self.scanner.nextToken()
             new = Expr(self.scanner)
             new.parse()
         elif self.scanner.currentToken() == Core.LESS:
-            self.printToken(self.scanner.currentToken().name)
+            self.printToken("<")
             self.scanner.nextToken()
             new = Expr(self.scanner)
             new.parse()
         elif self.scanner.currentToken() == Core.LESSEQUAL:
-            self.printToken(self.scanner.currentToken().name)
+            self.printToken("<=")
             self.scanner.nextToken()
             new = Expr(self.scanner)
             new.parse()
         else:
             print("ERROR: EQUAL or LESS or LESSEQUAL token expected, received" + self.scanner.currentToken().name)
-
+            exit(0)
 
     def printToken(self, token):
-        print(token + " ", end="")
+        print(token, end="")

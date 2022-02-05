@@ -16,7 +16,7 @@ class Program:
                 new = Decl_seq(self.scanner, 1)
                 new.parse()
             if self.scanner.currentToken() == Core.BEGIN:
-                self.printToken(self.scanner.currentToken().name)
+                self.printToken(self.scanner.currentToken().name.lower()+"\n")
                 self.scanner.nextToken()
                 new = Stmt_seq(self.scanner, 1)
                 new.parse()

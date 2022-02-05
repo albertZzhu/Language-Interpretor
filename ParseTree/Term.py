@@ -11,10 +11,10 @@ class Term:
         new = Factor(self.scanner)
         new.parse()
         if self.scanner.currentToken() == Core.MULT:
-            self.printToken(self.scanner.currentToken().name)
+            self.printToken("*")
             self.scanner.nextToken()
             new = Term(self.scanner)
             new.parse()
 
     def printToken(self, token):
-        print(token+" ", end="")
+        print(token, end="")
