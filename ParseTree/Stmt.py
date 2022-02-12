@@ -6,34 +6,39 @@ from .If import If
 from .Loop import Loop
 from .In import In
 from .Out import Out
+from .SemanticCheck import SemanticCheck
+
 
 class Stmt:
 
-    def __init__(self, scanner, numIndent):
+    def __init__(self, scanner, numIndent, check):
         self.scanner = scanner
         self.numIndent = numIndent
+        self.check = check
 
     def parse(self):
         if self.scanner.currentToken() == Core.ID:
-            new = Assign(self.scanner, self.numIndent)
+            new = Assign(self.scanner, self.numIndent, self.check)
             new.parse()
         elif self.scanner.currentToken() == Core.IF:
-            new = If(self.scanner, self.numIndent)
+            self.check.stackEntry()
+            new = If(self.scanner, self.numIndent, self.check)
             new.parse()
         elif self.scanner.currentToken() == Core.WHILE:
-            new = Loop(self.scanner, self.numIndent)
+            self.check.stackEntry()
+            new = Loop(self.scanner, self.numIndent, self.check)
             new.parse()
         elif self.scanner.currentToken() == Core.INPUT:
-            new = In(self.scanner, self.numIndent)
+            new = In(self.scanner, self.numIndent, self.check)
             new.parse()
         elif self.scanner.currentToken() == Core.OUTPUT:
-            new = Out(self.scanner, self.numIndent)
+            new = Out(self.scanner, self.numIndent, self.check)
             new.parse()
         elif self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF:
-            new = Decl(self.scanner, self.numIndent)
+            new = Decl(self.scanner, self.numIndent, self.check)
             new.parse()
         else:
-            print("ERROR: Expecting statement token form, received " + self.scanner.currentToken().name)
+            print("\nERROR: Expecting statement token form, received " + self.scanner.currentToken().name)
             exit(0)
 
 
