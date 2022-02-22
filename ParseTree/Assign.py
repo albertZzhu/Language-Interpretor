@@ -15,7 +15,7 @@ class Assign:
         self.printToken("\t" * self.numIndent+self.scanner.getID())
         ifid = self.check.ifIDExist(self.scanner.getID())
         ifref = self.check.ifREFExist(self.scanner.getID())
-        if not (ifid or ifref):
+        if not ifid and not ifref:
             print("\nID or REF: " + self.scanner.getID() + " not in list")
             exit(0)
         self.scanner.nextToken()

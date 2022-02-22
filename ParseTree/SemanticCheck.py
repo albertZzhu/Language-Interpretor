@@ -15,7 +15,7 @@ class SemanticCheck:
         self.idList[len(self.idList)-1].extend(newList)
 
     def joinREF(self, newList):
-        self.refList[len(self.refList)-1].append(newList)
+        self.refList[len(self.refList)-1].extend(newList)
 
     def stackEntry(self):
         self.idList.append([])
@@ -53,9 +53,7 @@ class SemanticCheck:
         return False
 
     def outputREF(self):
-        for i in self.refList:
-            for j in i:
-                print(j, end="")
+        print(self.refList)
 
     def outputID(self):
         for i in self.idList:

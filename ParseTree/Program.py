@@ -26,6 +26,9 @@ class Program:
                 new.parse()
                 if self.scanner.currentToken() == Core.END:
                     self.printToken(self.scanner.currentToken().name.lower())
+                    self.scanner.nextToken()
+                    if self.scanner.currentToken() != Core.EOS:
+                        print("\nERROR: Statement after end token.")
                 else:
                     print("\nERROR: Expecting END token, received " + self.scanner.currentToken().name)
                     exit(0)

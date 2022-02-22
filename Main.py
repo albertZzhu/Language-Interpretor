@@ -5,8 +5,8 @@ from ParseTree.Program import Program
 
 def main():
   # Initialize the scanner with the input file sys.argv[1]
-  for i in range(1, 27):
-    S = Scanner("Error/10.code")
+
+  S = Scanner("Correct/1.code")
 
   new = Program(S)
   new.parse()
