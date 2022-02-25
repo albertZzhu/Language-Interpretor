@@ -1,20 +1,24 @@
 from Core import Core
-from Scanner import Scanner
 from .Expr import Expr
-from .SemanticCheck import SemanticCheck
 
 
 class Assign:
 
-    def __init__(self, scanner, numIndent, check):
+    def __init__(self, scanner, numIndent, check, memory):
         self.scanner = scanner
         self.numIndent = numIndent
         self.check = check
+        self.status = -1
+        self.variable = ""
+        self.shareID = ""
+        self.memory = memory
+        self.expr = None
 
     def parse(self):
         self.printToken("\t" * self.numIndent+self.scanner.getID())
         ifid = self.check.ifIDExist(self.scanner.getID())
         ifref = self.check.ifREFExist(self.scanner.getID())
+        self.variable = self.scanner.getID()
         if not ifid and not ifref:
             print("\nID or REF: " + self.scanner.getID() + " not in list")
             exit(0)
@@ -23,6 +27,7 @@ class Assign:
             self.printToken("=")
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.NEW:
+                self.status = 0
                 if ifref:
                     self.printToken(self.scanner.currentToken().name.lower()+" ")
                     self.scanner.nextToken()
@@ -42,10 +47,12 @@ class Assign:
                     print("\nID cannot be assigned in this form.")
                     exit(0)
             elif self.scanner.currentToken() == Core.SHARE:
+                self.status = 1
                 if ifref:
                     self.printToken(self.scanner.currentToken().name.lower()+" ")
                     self.scanner.nextToken()
                     if self.scanner.currentToken() == Core.ID:
+                        self.shareID = self.scanner.getID()
                         self.printToken(self.scanner.getID())
                         self.scanner.nextToken()
                         if self.scanner.currentToken() == Core.SEMICOLON:
@@ -61,8 +68,9 @@ class Assign:
                     print("\nID cannot be assigned in this form.")
                     exit(0)
             else:
-                new = Expr(self.scanner, self.check)
-                new.parse()
+                self.status = 2
+                self.expr = Expr(self.scanner, self.check, self.memory)
+                self.expr.parse()
                 if self.scanner.currentToken() == Core.SEMICOLON:
                     self.printToken(";\n")
                     self.scanner.nextToken()
@@ -75,4 +83,15 @@ class Assign:
 
     def printToken(self, token):
         print(token, end="")
+
+    def execute(self):
+        if self.status == 0:
+            self.memory.newClass(self.variable)
+        elif self.status == 1:
+            self.memory.valueAssign(self.variable, self.memory.getValue(self.shareID))
+        elif self.status == 2:
+            value = self.expr.execute()
+            self.memory.valueAssign(self.variable, value)
+
+
         

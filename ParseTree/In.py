@@ -4,10 +4,13 @@ from .SemanticCheck import SemanticCheck
 
 class In:
 
-    def __init__(self, scanner, numIndent, check):
+    def __init__(self, scanner, numIndent, check, memory, data):
         self.scanner = scanner
         self.numIndent = numIndent
         self.check = check
+        self.memory = memory
+        self.data = data
+        self.id =  ""
 
     def parse(self):
         if self.scanner.currentToken() == Core.INPUT:
@@ -17,6 +20,7 @@ class In:
                 if not (self.check.ifIDExist(self.scanner.getID()) or self.check.ifREFExist(self.scanner.getID())):
                     print("\nERROR: ID: " + self.scanner.getID() + " not declared")
                     exit(0)
+                self.id = self.scanner.getID()
                 self.printToken(self.scanner.getID())
                 self.scanner.nextToken()
                 if self.scanner.currentToken() == Core.SEMICOLON:
@@ -34,3 +38,7 @@ class In:
 
     def printToken(self, token):
         print(token, end="")
+
+    def execute(self):
+        self.memory.valueAssign(self.id, self.data.getCONST())
+        self.data.nextToken()

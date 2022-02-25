@@ -6,31 +6,38 @@ from .SemanticCheck import SemanticCheck
 
 class If:
 
-    def __init__(self, scanner, numIndent, check):
+    def __init__(self, scanner, numIndent, check, memory, data):
         self.scanner = scanner
         self.numIndent = numIndent
         self.check = check
+        self.memory = memory
+        self.cond = None
+        self.stmtSeq1 = None
+        self.stmtSeq2 = None
+        self.status = 0
+        self.data = data
 
     def parse(self):
         from .Stmt_seq import Stmt_seq
         if self.scanner.currentToken() == Core.IF:
             self.printToken("\t" * self.numIndent+self.scanner.currentToken().name.lower())
             self.scanner.nextToken()
-            new = Cond(self.scanner, self.check)
-            new.parse()
+            self.cond = Cond(self.scanner, self.check, self.memory)
+            self.cond.parse()
             if self.scanner.currentToken() == Core.THEN:
                 self.printToken(" "+self.scanner.currentToken().name.lower()+"\n")
                 self.scanner.nextToken()
-                new = Stmt_seq(self.scanner, self.numIndent+1, self.check)
-                new.parse()
+                self.stmtSeq1 = Stmt_seq(self.scanner, self.numIndent+1, self.check, self.memory, self.data)
+                self.stmtSeq1.parse()
                 if self.scanner.currentToken() == Core.ENDIF:
                     self.printToken("\t" * self.numIndent+self.scanner.currentToken().name.lower()+"\n")
                     self.scanner.nextToken()
                 elif self.scanner.currentToken() == Core.ELSE:
+                    self.status = 1
                     self.printToken("\t" * self.numIndent+self.scanner.currentToken().name.lower()+"\n")
                     self.scanner.nextToken()
-                    new = Stmt_seq(self.scanner, self.numIndent+1, self.check)
-                    new.parse()
+                    self.stmtSeq2 = Stmt_seq(self.scanner, self.numIndent+1, self.check, self.memory, self.data)
+                    self.stmtSeq2.parse()
                     if self.scanner.currentToken() == Core.ENDIF:
                         self.printToken("\t" * self.numIndent+self.scanner.currentToken().name.lower()+"\n")
                         self.scanner.nextToken()
@@ -50,3 +57,11 @@ class If:
 
     def printToken(self, token):
         print(token+" ", end="")
+
+    def execute(self):
+        if self.cond.execute():
+            self.stmtSeq1.execute()
+        else:
+            if self.status == 1:
+                self.stmtSeq2.execute()
+        self.memory.popStack()

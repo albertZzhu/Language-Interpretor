@@ -11,32 +11,43 @@ from .SemanticCheck import SemanticCheck
 
 class Stmt:
 
-    def __init__(self, scanner, numIndent, check):
+    def __init__(self, scanner, numIndent, check, memory, data):
         self.scanner = scanner
         self.numIndent = numIndent
         self.check = check
+        self.memory = memory
+        self.new = None
+        self.status = -1
+        self.data = data
 
     def parse(self):
         if self.scanner.currentToken() == Core.ID:
-            new = Assign(self.scanner, self.numIndent, self.check)
-            new.parse()
+            self.new = Assign(self.scanner, self.numIndent, self.check, self.memory)
+            self.new.parse()
+            self.status = 0
         elif self.scanner.currentToken() == Core.IF:
             self.check.stackEntry()
-            new = If(self.scanner, self.numIndent, self.check)
-            new.parse()
+            self.memory.pushStack()
+            self.new = If(self.scanner, self.numIndent, self.check,  self.memory, self.data)
+            self.new.parse()
+            self.status = 1
         elif self.scanner.currentToken() == Core.WHILE:
             self.check.stackEntry()
-            new = Loop(self.scanner, self.numIndent, self.check)
-            new.parse()
+            self.new = Loop(self.scanner, self.numIndent, self.check, self.memory, self.data)
+            self.new.parse()
+            self.status = 2
         elif self.scanner.currentToken() == Core.INPUT:
-            new = In(self.scanner, self.numIndent, self.check)
-            new.parse()
+            self.new = In(self.scanner, self.numIndent, self.check, self.memory, self.data)
+            self.new.parse()
+            self.status = 3
         elif self.scanner.currentToken() == Core.OUTPUT:
-            new = Out(self.scanner, self.numIndent, self.check)
-            new.parse()
+            self.new = Out(self.scanner, self.numIndent, self.check, self.memory)
+            self.new.parse()
+            self.status = 4
         elif self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF:
-            new = Decl(self.scanner, self.numIndent, self.check)
-            new.parse()
+            self.new = Decl(self.scanner, self.numIndent, self.check)
+            self.new.parse()
+            self.status = 5
         else:
             print("\nERROR: Expecting statement token form, received " + self.scanner.currentToken().name)
             exit(0)
@@ -44,3 +55,24 @@ class Stmt:
 
     def printToken(self, token):
         print(token, end="")
+
+    def execute(self):
+        if self.status == 0:
+            self.new.execute()
+        elif self.status == 1:
+            self.memory.pushStack()
+            self.new.execute()
+        elif self.status == 2:
+            self.memory.pushStack()
+            self.new.execute()
+        elif self.status == 3:
+            self.new.execute()
+        elif self.status == 4:
+            self.new.execute()
+        elif self.status == 5:
+            newL = self.new.execute()
+            for i in newL[0]:
+                self.memory.addLocal(i, False)
+            for i in newL[1]:
+                self.memory.addLocal(i, True)
+

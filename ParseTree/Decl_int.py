@@ -11,18 +11,19 @@ class Decl_int:
         self.scanner = scanner
         self.numIndent = numIndent
         self.check = check
+        self.newList = []
 
     def parse(self):
         if self.scanner.currentToken() == Core.INT:
             self.printToken(self.scanner.currentToken().name.lower())
             self.scanner.nextToken()
             new = Id_list(self.scanner)
-            newlist = new.parse()
-            for i in newlist:
+            self.newList = new.parse()
+            for i in self.newList:
                 if self.check.ifIDDuplicate(i):
                     print("\nERROR: ID declare duplication: " + str(i))
                     exit(0)
-            self.check.joinID(newlist)
+            self.check.joinID(self.newList)
         else:
             print("\nERROR: not an int identifier")
             exit(0)
@@ -30,5 +31,9 @@ class Decl_int:
     def printToken(self, token):
         print("\t" * self.numIndent, end="")
         print(token+" ", end="")
+
+    def execute(self):
+        return self.newList
+
 
 

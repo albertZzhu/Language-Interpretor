@@ -53,9 +53,7 @@ class SemanticCheck:
         return False
 
     def outputREF(self):
-        print(self.refList)
+        return self.refList
 
     def outputID(self):
-        for i in self.idList:
-            for j in i:
-                print(j, end="")
+        return self.idList
