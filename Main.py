@@ -6,8 +6,8 @@ from ParseTree.Program import Program
 def main():
   # Initialize the scanner with the input file sys.argv[1]
 
-  S1 = Scanner("Cases/Correct/22.code")
-  S2 = Scanner("Cases/Correct/22.data")
+  S1 = Scanner(sys.argv[1])
+  S2 = Scanner(sys.argv[2])
 
   new = Program(S1, S2)
   new.parse()

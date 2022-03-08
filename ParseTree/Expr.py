@@ -19,13 +19,11 @@ class Expr:
         self.term.parse()
         if self.scanner.currentToken() == Core.ADD:
             self.status = 0
-            self.printToken("+")
             self.scanner.nextToken()
             self.secondExpr = Expr(self.scanner, self.check, self.memory)
             self.secondExpr.parse()
         elif self.scanner.currentToken() == Core.SUB:
             self.status = 1
-            self.printToken("-")
             self.scanner.nextToken()
             self.secondExpr = Expr(self.scanner, self.check, self.memory)
             self.secondExpr.parse()

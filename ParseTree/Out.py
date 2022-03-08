@@ -14,12 +14,10 @@ class Out:
 
     def parse(self):
         if self.scanner.currentToken() == Core.OUTPUT:
-            self.printToken("\t" * self.numIndent+self.scanner.currentToken().name.lower()+" ")
             self.scanner.nextToken()
             self.expr = Expr(self.scanner, self.check, self.memory)
             self.expr.parse()
             if self.scanner.currentToken() == Core.SEMICOLON:
-                self.printToken(";\n")
                 self.scanner.nextToken()
             else:
                 print("\nERROR: SEMICOLON token expected, received" + self.scanner.currentToken().name)
@@ -32,4 +30,5 @@ class Out:
         print(token, end="")
 
     def execute(self):
-        print("\n"+str(self.expr.execute()))
+        print(str(self.expr.execute()))
+        #self.memory.debugFunction()

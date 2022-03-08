@@ -17,7 +17,6 @@ class Term:
         self.factor = Factor(self.scanner, self.check, self.memory)
         self.factor.parse()
         if self.scanner.currentToken() == Core.MULT:
-            self.printToken("*")
             self.scanner.nextToken()
             self.secondTerm = Term(self.scanner, self.check, self.memory)
             self.secondTerm.parse()

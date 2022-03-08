@@ -18,19 +18,16 @@ class Cmpr:
         self.baseExpr.parse()
         if self.scanner.currentToken() == Core.EQUAL:
             self.status = 0
-            self.printToken("==")
             self.scanner.nextToken()
             self.performExpr = Expr(self.scanner, self.check, self.memory)
             self.performExpr.parse()
         elif self.scanner.currentToken() == Core.LESS:
             self.status = 1
-            self.printToken("<")
             self.scanner.nextToken()
             self.performExpr = Expr(self.scanner, self.check, self.memory)
             self.performExpr.parse()
         elif self.scanner.currentToken() == Core.LESSEQUAL:
             self.status = 2
-            self.printToken("<=")
             self.scanner.nextToken()
             self.performExpr = Expr(self.scanner, self.check, self.memory)
             self.performExpr.parse()

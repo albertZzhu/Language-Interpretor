@@ -11,11 +11,9 @@ class Id_list:
 
     def parse(self):
         if self.scanner.currentToken() == Core.ID:
-            self.printToken(self.scanner.getID())
             self.list.append(self.scanner.getID())
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.COMMA:
-                self.printToken(",")
                 self.scanner.nextToken()
                 new = Id_list(self.scanner)
                 newlist = new.parse()
@@ -26,7 +24,6 @@ class Id_list:
                             exit(0)
                 self.list.extend(newlist)
             elif self.scanner.currentToken() == Core.SEMICOLON:
-                self.printToken(";\n")
                 self.scanner.nextToken()
             else:
                 print("\nERROR: Expecting comma or semicolon, received " + self.scanner.currentToken().name)

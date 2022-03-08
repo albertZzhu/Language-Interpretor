@@ -15,7 +15,6 @@ class Decl_ref:
 
     def parse(self):
         if self.scanner.currentToken() == Core.REF:
-            self.printToken(self.scanner.currentToken().name.lower())
             self.scanner.nextToken()
             new = Id_list(self.scanner)
             self.newList = new.parse()

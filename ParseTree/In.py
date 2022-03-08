@@ -14,17 +14,14 @@ class In:
 
     def parse(self):
         if self.scanner.currentToken() == Core.INPUT:
-            self.printToken("\t" * self.numIndent+self.scanner.currentToken().name.lower()+" ")
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.ID:
                 if not (self.check.ifIDExist(self.scanner.getID()) or self.check.ifREFExist(self.scanner.getID())):
                     print("\nERROR: ID: " + self.scanner.getID() + " not declared")
                     exit(0)
                 self.id = self.scanner.getID()
-                self.printToken(self.scanner.getID())
                 self.scanner.nextToken()
                 if self.scanner.currentToken() == Core.SEMICOLON:
-                    self.printToken(";\n")
                     self.scanner.nextToken()
                 else:
                     print("\nERROR: SEMICOLON token expected, received" + self.scanner.currentToken().name)
@@ -40,5 +37,9 @@ class In:
         print(token, end="")
 
     def execute(self):
-        self.memory.valueAssign(self.id, self.data.getCONST())
+        if self.data.currentToken() != Core.EOS:
+            self.memory.valueAssign(self.id, self.data.getCONST(), False)
+        else:
+            print("Error: input has reached the end, no input provided.")
+            exit(0)
         self.data.nextToken()

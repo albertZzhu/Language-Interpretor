@@ -13,24 +13,21 @@ class Program:
         self.scanner = scanner
         self.check = SemanticCheck()
         self.check.stackEntry()
-        self.memory = Memory(self.check)
+        self.memory = Memory()
         self.data = data
 
     def parse(self):
         if self.scanner.currentToken() == Core.PROGRAM:
-            self.printToken(self.scanner.currentToken().name.lower()+"\n")
             self.scanner.nextToken()
             if self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF:
                 self.decl = Decl_seq(self.scanner, 1, self.check)
                 self.decl.parse()
                 self.check.stackEntry()
             if self.scanner.currentToken() == Core.BEGIN:
-                self.printToken(self.scanner.currentToken().name.lower()+"\n")
                 self.scanner.nextToken()
                 self.stmt = Stmt_seq(self.scanner, 1, self.check, self.memory, self.data)
                 self.stmt.parse()
                 if self.scanner.currentToken() == Core.END:
-                    self.printToken(self.scanner.currentToken().name.lower())
                     self.scanner.nextToken()
                     if self.scanner.currentToken() != Core.EOS:
                         print("\nERROR: Statement after end token.")

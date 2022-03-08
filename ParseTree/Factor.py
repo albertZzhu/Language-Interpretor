@@ -21,22 +21,18 @@ class Factor:
                 exit(0)
             self.status = 0
             self.valueRef = self.scanner.getID()
-            self.printToken(self.scanner.getID())
             self.scanner.nextToken()
         elif self.scanner.currentToken() == Core.CONST:
             self.status = 1
             self.valueRef = self.scanner.getCONST()
-            self.printToken(str(self.scanner.getCONST()))
             self.scanner.nextToken()
         else:
             if self.scanner.currentToken() == Core.LPAREN:
-                self.printToken("(")
                 self.scanner.nextToken()
                 self.status = 2
                 self.valueRef = Expr(self.scanner, self.check, self.memory)
                 self.valueRef.parse()
                 if self.scanner.currentToken() == Core.RPAREN:
-                    self.printToken(")")
                     self.scanner.nextToken()
                 else:
                     print("\nERROR: Expecting RPAREN received " + self.scanner.currentToken().name)

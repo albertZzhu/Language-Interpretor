@@ -52,6 +52,21 @@ class SemanticCheck:
                 return True
         return False
 
+    def ifIDorREF(self, name):
+        opt = None
+        leng = len(self.idList)
+        for i in range(leng-1, -1, -1):
+            for j in self.idList[i]:
+                if j == name:
+                    opt = True
+                    return opt
+            for a in self.refList[i]:
+                if a == name:
+                    print(a)
+                    opt = False
+                    return opt
+        return opt
+
     def outputREF(self):
         return self.refList
 
