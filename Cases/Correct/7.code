@@ -1,10 +1,23 @@
 program
-	int x;
+	A(ref r, s) begin 
+		r=0; 
+		s=0; 
+	endfunc
+	B(ref r, s) begin 
+		r=10; 
+		s=10; 
+	endfunc
+	ref x;
+	ref y;
 begin
-	input x;
-	if x==x then
-		int x;
-		x=99;
-	endif
+	x=new class;
+	y=new class;
+	x=1;
+	y=1;
+	begin A(x, y);
 	output x;
+	output y;
+	begin B(x, y);
+	output x;
+	output y;
 end

@@ -24,7 +24,7 @@ class Decl:
             self.ref = Decl_ref(self.scanner, self.numIndent, self.check)
             self.ref.parse()
         else:
-            print("\nERROR: wrong decl format, it is neither REF nor INT")
+            print("\nERROR: wrong decl format, it is neither REF nor INT.")
             exit(0)
 
     def execute(self):

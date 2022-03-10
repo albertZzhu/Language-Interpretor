@@ -1,6 +1,11 @@
 program
-	int x;
+	A(ref r) begin 
+		r=0; 
+	endfunc
+	ref x;
 begin
-	x=0-10;
+	x=new class;
+	x=1;
+	begin A(x);
 	output x;
 end

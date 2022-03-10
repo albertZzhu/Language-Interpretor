@@ -1,9 +1,9 @@
 program
- int x, y;
+	A(ref r) begin begin 
+		r=0; 
+	endfunc
+	int x;
 begin
- x=100;
- while 0<x begin
-  input y;
-  x = x-1;
- endwhile
+	x=1;
+	output 4;
 end

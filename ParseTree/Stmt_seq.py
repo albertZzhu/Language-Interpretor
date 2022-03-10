@@ -21,7 +21,8 @@ class Stmt_seq:
         if self.scanner.currentToken() != Core.END \
                 and self.scanner.currentToken() != Core.ENDIF \
                 and self.scanner.currentToken() != Core.ELSE \
-                and self.scanner.currentToken() != Core.ENDWHILE:
+                and self.scanner.currentToken() != Core.ENDWHILE\
+                and self.scanner.currentToken() != Core.ENDFUNC:
             self.newStmtSeq = Stmt_seq(self.scanner, self.numIndent, self.check, self.memory, self.data)
             self.newStmtSeq.parse()
 

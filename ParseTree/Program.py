@@ -19,8 +19,9 @@ class Program:
     def parse(self):
         if self.scanner.currentToken() == Core.PROGRAM:
             self.scanner.nextToken()
-            if self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF:
-                self.decl = Decl_seq(self.scanner, 1, self.check)
+            if self.scanner.currentToken() == Core.INT or self.scanner.currentToken() == Core.REF or self.scanner.\
+                    currentToken() == Core.ID:
+                self.decl = Decl_seq(self.scanner, 1, self.check, self.memory, self.data)
                 self.decl.parse()
                 self.check.stackEntry()
             if self.scanner.currentToken() == Core.BEGIN:

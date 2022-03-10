@@ -1,6 +1,20 @@
 program
-	int x;
+	ref x, y;
+	x(ref a, b) begin 
+		if b<1 then 
+			x = new class; 
+			x=0; 
+		else 
+			b=b-1; 
+			begin x(a, b); 
+		endif 
+	endfunc
 begin
-	x=1-1-1-1;
+	ref x, y;
+	x=new class;
+	y=new class;
+	x = 10;
+	y = 5;
+	begin x(x, y);
 	output x;
 end

@@ -7,6 +7,7 @@ from .Loop import Loop
 from .In import In
 from .Out import Out
 from .SemanticCheck import SemanticCheck
+from .Func_call import Func_call
 
 
 class Stmt:
@@ -48,6 +49,10 @@ class Stmt:
             self.new = Decl(self.scanner, self.numIndent, self.check)
             self.new.parse()
             self.status = 5
+        elif self.scanner.currentToken() == Core.BEGIN:
+            self.new = Func_call(self.scanner, self.numIndent, self.check, self.memory, self.data)
+            self.new.parse()
+            self.status = 6
         else:
             print("\nERROR: Expecting statement token form, received " + self.scanner.currentToken().name)
             exit(0)
@@ -75,4 +80,7 @@ class Stmt:
                 self.memory.addLocal(i, False)
             for i in newL[1]:
                 self.memory.addLocal(i, True)
+        elif self.status == 6:
+            self.memory.pushStack()
+            self.new.execute()
 
